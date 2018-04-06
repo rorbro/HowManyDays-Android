@@ -122,14 +122,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     break;
             }
             ArrayAdapter<Integer> adapter2 = new ArrayAdapter<Integer>(this, R.layout.spinner_item, daysArray);
-//            adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             adapter2.setDropDownViewResource(R.layout.spinner_item);
             spinner.setAdapter(adapter2);
             resultTextView.setText("You entered: " + date);
             label.setText("Day: ");
             enterButton.setText("Submit Day");
-
-
         } else if (!isDaySelected) {
             isDaySelected = true;
             date += " " + day;
@@ -140,7 +137,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             resultTextView.setText("You entered: " + date + "\n\n ENTER YEAR");
             label.setText("Year: ");
             enterButton.setText("Submit Year");
-
         } else if (!isYearSelected){
             InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             mgr.hideSoftInputFromWindow(yearEntered.getWindowToken(), 0);
@@ -152,7 +148,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     year = yearEntered.getText().toString();
                     yearNumber = Integer.parseInt(year);
                     if (yearNumber > 1000000) {
-                        Toast.makeText(getApplicationContext(), "Please enter a smaller number", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Please enter a number between 0 and 1,000,000", Toast.LENGTH_LONG).show();
                         yearEntered.setText("");
                     } else if (((monthNumber == 2 && dayNumber == 29) && (((yearNumber - 2000) % 4 != 0) || ((yearNumber - 2000) % 100 == 0) && ((yearNumber - 2000) % 400 != 0)))) {
                         Toast.makeText(getApplicationContext(), year + " is not a leap year. Please try again.", Toast.LENGTH_LONG).show();
@@ -168,7 +164,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                         isYearSelected = true;
                     }
                 } catch (Exception e) {
-                    resultTextView.setText("Please enter a smaller number");
+                    resultTextView.setText("Please enter a number between 0 and 1,000,000");
                     yearEntered.setText("");
                 }
             }
@@ -180,7 +176,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             dateString = String.valueOf(monthNow) + " " + String.valueOf(dayNow) + ", " + String.valueOf(yearNow);
             enterButton.setVisibility(View.INVISIBLE);
             howManyDays(monthNow, dayNow, yearNow);
-
         }
     }
 
@@ -229,7 +224,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     }
                 }
             } else if (monthNumber < monthNow) {
-                //START BACK HERE
                 monthDifference =  12 - monthNow + monthNumber - 1;
                 if (dayNumber >= dayNow) {
                     monthDifference += 1;
@@ -438,7 +432,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         message += ", for a TOTAL of " + formatter.format(totalDifference) + " day(s)";
         resultTextView.setText(message);
         startOverButton.setVisibility(View.VISIBLE);
-
     }
 
     public int adjustDaysOfMonth (int month, int year) {
@@ -457,7 +450,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     returnNumber = -2;
                 }
         }
-
         return returnNumber;
     }
 
@@ -504,8 +496,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
     }
 
-    protected void hideKeyboard(View view)
-    {
+    protected void hideKeyboard(View view) {
         InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         in.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
@@ -550,7 +541,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         for (int i = 1; i <= 29; i++) {
             daysArray.add(i);
         }
-
     }
 
     @Override
@@ -559,13 +549,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             month = parent.getItemAtPosition(position).toString();
         } else if (!isDaySelected) {
             day = parent.getItemAtPosition(position).toString();
-
         }
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-
     }
 
     public int calculateLeapDays (int earlyYear, int futureYear) {
@@ -603,6 +591,4 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
         return leapDays;
     }
-
-
 }
